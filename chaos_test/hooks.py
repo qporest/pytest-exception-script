@@ -5,9 +5,15 @@ from .parser import TomlChaosFile, YamlChaosFile
 def pytest_collect_file(path, parent):
     if path.basename.startswith("chaos_"):
         if path.ext == ".toml":
-            return TomlChaosFile(path, parent)
+            if hasattr(TomlChaosFile, "from_parent"):
+                return TomlChaosFile.from_parent(parent, fspath=path)
+            else:
+                return TomlChaosFile(path, parent)
         elif path.ext in [".yaml", ".yml"]:
-            return YamlChaosFile(path, parent)
+            if hasattr(TomlChaosFile, "from_parent"):
+                return YamlChaosFile.from_parent(parent, fspath=path)
+            else:
+                return YamlChaosFile(path, parent)
     return None
 
 

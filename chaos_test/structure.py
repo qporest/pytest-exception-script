@@ -38,7 +38,12 @@ class Scenario(object):
         self.monkeypatch = monkeypatch.MonkeyPatch()
 
         for i, act in enumerate(acts):
-            self.add_act(Act("act-{}".format(i), self.parent, self, act, last=(i==len(acts)-1) ))
+            if hasattr(Act, "from_parent"):
+                self.add_act(Act.from_parent(self.parent, name="act-{}".format(i),
+                                scenario=self, act_info=act, last=(i == len(acts)-1)))
+            else:
+                self.add_act(Act(name="act-{}".format(i), parent=self.parent, scenario=self, 
+                    act_info=act, last=(i==len(acts)-1) ))
     
     def add_act(self, act):
         self.acts.append(act)
@@ -105,7 +110,7 @@ class Act(Item):
     exit_point - function that tells Scenario to switch to the next Act
     actors - list of points to mock
     """
-    def __init__(self, name, parent, scenario, act_info, last=False):
+    def __init__(self, name=None, parent=None, scenario=None, act_info=None, last=False):
         super(Act, self).__init__(name, parent)
         self.history = {}
         self.name = name
@@ -184,8 +189,12 @@ class Actor(BaseActor):
         try:
             self.sub = import_string(sub.get(self.ACTOR_EXEC).split(',')[0].strip())
         except ImportStringError as e:
-            import __builtin__
-            attempt = getattr(__builtin__, sub.get(
+            import sys
+            if sys.version_info.major < 3:
+                import __builtin__ as builtins
+            else:
+                import builtins
+            attempt = getattr(builtins, sub.get(
                 self.ACTOR_EXEC).split(',')[0].strip())
             if not attempt:
                 raise e

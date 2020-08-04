@@ -1,4 +1,5 @@
 import pytest
+import sys
 
 def test_empty_chaos(testdir):
     """
@@ -15,7 +16,10 @@ def test_empty_chaos(testdir):
     # run all tests with pytest
     result = testdir.runpytest()
     # check that all 4 tests passed
-    result.assert_outcomes(passed=0, failed=0, error=1)
+    if sys.version_info.major < 3:
+        result.assert_outcomes(passed=0, failed=0, error=1)
+    else:
+        result.assert_outcomes(passed=0, failed=0, errors=1)
 
 
 def test_app_factory_incorrect_definition(testdir):
@@ -32,7 +36,10 @@ def test_app_factory_incorrect_definition(testdir):
     """)
     # run all tests with pytest
     result = testdir.runpytest()
-    result.assert_outcomes(error=1)
+    if sys.version_info.major < 3:
+        result.assert_outcomes(error=1)
+    else:    
+        result.assert_outcomes(errors=1)
 
 def test_app_factory_definition_succeeds(testdir):
     """Confirm that correct entry-point definition succeeds."""
@@ -71,7 +78,10 @@ def test_errors_collected_no_next_point_with_at_least_one_act(testdir):
     """)
     # run all tests with pytest
     result = testdir.runpytest()
-    result.assert_outcomes(error=1)
+    if sys.version_info.major < 3:
+        result.assert_outcomes(error=1)
+    else:    
+        result.assert_outcomes(errors=1)
 
 
 def test_errors_multiple_acts_collected_no_next_point(testdir):
@@ -100,7 +110,10 @@ def test_errors_multiple_acts_collected_no_next_point(testdir):
     # run all tests with pytest
     result = testdir.runpytest()
     # check that all 4 tests passed
-    result.assert_outcomes(error=1)
+    if sys.version_info.major < 3:
+        result.assert_outcomes(error=1)
+    else:    
+        result.assert_outcomes(errors=1)
 
 def test_errors_not_every_act_has_next_point_first_missing(testdir):
     """
@@ -131,7 +144,10 @@ def test_errors_not_every_act_has_next_point_first_missing(testdir):
     """)
     # run all tests with pytest
     result = testdir.runpytest()
-    result.assert_outcomes(error=1)
+    if sys.version_info.major < 3:
+        result.assert_outcomes(error=1)
+    else:    
+        result.assert_outcomes(errors=1)
 
 def test_errors_not_every_act_has_next_point_last_missing(testdir):
     """
@@ -162,7 +178,10 @@ def test_errors_not_every_act_has_next_point_last_missing(testdir):
     """)
     # run all tests with pytest
     result = testdir.runpytest()
-    result.assert_outcomes(error=1)
+    if sys.version_info.major < 3:
+        result.assert_outcomes(error=1)
+    else:    
+        result.assert_outcomes(errors=1)
 
 def test_fails_collected_builtin_exception_global_next(testdir):
     """
