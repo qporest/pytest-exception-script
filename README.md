@@ -1,3 +1,4 @@
+![Plugin Tests](https://github.com/qporest/pytest-exception-script/workflows/Plugin%20Tests/badge.svg?branch=master)
 # pytest-exception-script
 The goal of this pytest plugin is to allow quick and easy testing of your application's resiliency. This is accomplished by creating exception scripts / scenarios which allow you to inject exceptions into your code execution without having to repeatedly set-up tests.
 
