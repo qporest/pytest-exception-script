@@ -4,6 +4,11 @@ The goal of this pytest plugin is to allow quick and easy testing of your applic
 
 This won't work for applications that have multiple processes, but should work with threads (need to do more testing). Under the hood it's just abusing monkeypatch.
 
+- [Structure](#structure)
+  - [Examples of config files](#examples-of-config-files-)
+  - [What's happening here?](#what-s-happening-here-)
+- [FAQ](#faq)
+
 ### Structure
 Scripts can be written in YAML or TOML.
 Each script / scenario (these will be used interchangeably below) consists of multiple acts, each of which can have multiple actions. Scenario is successful and complete if every act in it is complete.
@@ -45,3 +50,9 @@ exc="KeyError"
 `exc` - exception to raise.
 
 So factory will be loaded and started, upon which first act starts. Every time when `get_data` will get called `KeyError` will be raised. With either a default or a custom message. Once `next-point` gets called next act starts. Once `next-point` of the last act is called the application terminates (hopefully) and all the tests get marked as complete.
+
+## FAQ
+- How do I use this with mocks?
+The best option for that I think is to create a test factory that mocks everything that needs to be mocked before starting the application.
+- Can't this be done with regular tests?
+Yes - absolutely. This in fact still creates tests, but hides some boilerplate. Some additional features might be implemented to make it more convenient and usable.
