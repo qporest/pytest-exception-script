@@ -1,0 +1,14 @@
+entry-point="tests.fake_app_success.factory"
+next-point="tests.fake_app_success.process_data"
+[[act]]
+[[act."tests.fake_app_success.get_data"]]
+exc="KeyError"
+[[act]]
+[[act."tests.fake_app_success.get_data"]]
+exc="KeyError"
+[[act]]
+[[act."tests.fake_app_success.get_data"]]
+exc="KeyError"
+[[act]]
+[[act."tests.fake_app_success.get_data"]]
+exc="KeyError"

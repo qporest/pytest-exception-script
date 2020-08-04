@@ -1,0 +1,13 @@
+entry-point: tests.fake_app_success.factory
+next-point: tests.fake_app_success.process_data
+acts:
+  - tests.fake_app_success.get_data:
+      - exc: KeyError, "Error in act I"
+    tests.fake_app_success.unused_method:
+      - exc: OSError, "Custom message passed"
+  - tests.fake_app_success.get_data:
+      - exc: KeyError
+  - tests.fake_app_success.get_data:
+      - exc: KeyError
+  - tests.fake_app_success.get_data:
+      - exc: KeyError
