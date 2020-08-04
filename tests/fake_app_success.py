@@ -2,8 +2,8 @@ import time
 
 import logging
 LOG = logging.getLogger(__name__)
-LOG.addHandler(logging.FileHandler(
-    "/Users/ihor.husar@ibm.com/temp/chaos-test/tests/fake_app.log"))
+# LOG.addHandler(logging.FileHandler(
+#     "/Users/ihor.husar@ibm.com/temp/chaos-test/tests/fake_app.log"))
 LOG.setLevel(logging.INFO)
 
 def unused_method():
